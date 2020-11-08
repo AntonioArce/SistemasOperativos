@@ -13,7 +13,6 @@ char mensaje[TAM];
 
 int main()
 {
-	int bytes=0;
 	unsigned short int respuesta;
 	pid_t pid1=fork();
 	mqdes= mq_open("/MiColaDeMensj",O_RDWR | O_CREAT, 0664,NULL);
