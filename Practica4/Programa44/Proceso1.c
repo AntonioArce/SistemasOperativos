@@ -7,7 +7,7 @@
 #include<sys/types.h>
 #include<semaphore.h>
 
-sem_t sem1;
+
 
 void regionCritica(int PID)
 {
@@ -47,20 +47,14 @@ int main()
    key_t llave1;
    key_t llave2;
    key_t llave3;
-   key_t llave4;
 
-
-   llave1=ftok("Prueba1",'k');
-   llave2=ftok("Prueba2",'l');
-   llave3=ftok("Prueba3",'m');
-   llave4=ftok("Prueba4",'n');
+   llave1=ftok("prueba1",'k');
+   llave2=ftok("prueba2",'l');
+   llave3=ftok("prueba3",'m');
 
    shmid1=shmget(llave1,sizeof(int),IPC_CREAT|0600);
    shmid2=shmget(llave2,sizeof(int),IPC_CREAT|0600);
    shmid3=shmget(llave3,sizeof(int),IPC_CREAT|0600);
-   shmid4=shmget(llave4,sizeof(int),IPC_CREAT|0600);
-
-   sem_init(&sem1,shmid4,1);  
 
    Hijo_desea_entrar=shmat(shmid1,0,0);
    Padre_desea_entrar=shmat(shmid2,0,0);
@@ -73,6 +67,7 @@ int main()
 
    while (1)
    {
+      //
       
       *Hijo_desea_entrar=1;
       while(*Padre_desea_entrar)
@@ -84,12 +79,11 @@ int main()
             *Hijo_desea_entrar=1;
          }
       }
-      sem_wait(&sem1);
+
       PID=getpid();
       regionCritica(PID);
       *Proceso_favorecido=2;
       *Hijo_desea_entrar=0;
-      sem_post(&sem1);
       regionNoCritica(PID);
    }
    return 0;
