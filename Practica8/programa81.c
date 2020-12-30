@@ -1,7 +1,8 @@
 #include "aplicacion.h"
+#include "directorios.h"
 
 int main()
 {
-    menuprincipal();	
+    //menuprincipal();
 	return 0;
 }
