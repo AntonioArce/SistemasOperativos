@@ -11,7 +11,7 @@ int crearDirectorio(char* nombreDirectorio) {
     if(!strlen(nombreDirectorio)) return -1;
     if(!checarExistenciaDirectorio(nombreDirectorio))
     {
-       return mkdir(nombreDirectorio, S_IRUSR | S_IRGRP | S_IROTH | S_IXUSR | S_IXGRP | S_IXOTH);
+       return mkdir(nombreDirectorio, 0777);
     }
     return 1;
 }

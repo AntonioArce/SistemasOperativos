@@ -9,5 +9,5 @@
 
 void menuprincipal(void);
 void seleccionDeOpcion(char);
-
+void creacionArchivo();
 #endif
