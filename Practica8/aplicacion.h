@@ -10,4 +10,6 @@
 void menuprincipal(void);
 void seleccionDeOpcion(char);
 void creacionArchivo();
+void borradoArchivo();
+
 #endif

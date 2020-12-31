@@ -10,8 +10,9 @@ void menuprincipal()
         puts("========= Bienvenido al menu principal =========\n\n");
         puts("1.- Crear Archivo");
         puts("2.- Modificar Archivos");
-        puts("3.- Buscar Archivo");
-        puts("4.- Salir");
+        puts("3.- Eliminar Archivo");
+        puts("4.- Listar Directorios");
+        puts("5.- Salir del sistema");
         puts("¿Que accion deseas realizar? ");
         __fpurge(stdin);
         scanf("%d", &opcion);
@@ -30,11 +31,16 @@ void seleccionDeOpcion(char op)
         creacionArchivo();
     break;
     case 2: //Modificar Archivo
+        
     break;
     case 3: //Borrar Archivo
+        borradoArchivo();
     break;
-    case 4: //Salir del sistema
-      exit(EXIT_SUCCESS);
+    case 4: //Lista el directorio actual y el contenido de los directorios
+        listarContenido();
+    break;
+    case 5: //Salir del sistema
+        exit(EXIT_SUCCESS);
     break;
     default:
       puts("Opcion no valida");
@@ -66,4 +72,25 @@ void creacionArchivo() {
     }else if(status == -1) {
         puts("Ocurrio un error");
     }
+}
+
+
+void borradoArchivo()
+{
+    char nombreArchivo[100];
+    int status = 0;
+    int directorio = 0;
+
+    puts("Ingrese el nombre del directorio a eliminar");
+    __fpurge(stdin);
+    fgets(nombreArchivo, 100, stdin);
+
+    //Aqui solo estoy usando la funcion eliminarDirectorio
+
+    status = eliminarDirectorio(nombreArchivo);
+
+    if(!status)
+        puts("Directorio eliminado correctamente");
+    else    
+        puts("ocurriio un error al eliminar directorio");
 }

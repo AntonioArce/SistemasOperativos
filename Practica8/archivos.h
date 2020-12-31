@@ -13,5 +13,7 @@ int crearArchivo(char[], char[], int);
 int modificarArchivo(char*);
 int eliminarArchivo(char*);
 int checarExistenciaArchivo(char*);
+int borrarArchivo(char*);
+void listarContenido();
 
 #endif

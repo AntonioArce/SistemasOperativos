@@ -63,3 +63,20 @@ int checarExistenciaArchivo(char* nombreArchivo) {
     }
     return 0;
 }
+
+/*
+ * Status de retorno
+ *  0 -> no existe el archivo
+ *  1 -> Archivo borrado exitosamente
+ * -1 -> Ocurrió un error al borrar archivo
+ * */
+
+int borrarArchivo(char* nombreArchivo)
+{
+    
+}
+
+void listarContenido()
+{
+    system("tree");   
+}
