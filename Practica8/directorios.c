@@ -9,6 +9,7 @@
 
 int crearDirectorio(char* nombreDirectorio) {
     if(!strlen(nombreDirectorio)) return -1;
+    if(nombreDirectorio[strlen(nombreDirectorio) - 1] == '\n') nombreDirectorio[strlen(nombreDirectorio) - 1] = '\0';
     if(!checarExistenciaDirectorio(nombreDirectorio))
     {
        return mkdir(nombreDirectorio, 0777);
@@ -27,6 +28,7 @@ int eliminarDirectorio(char* nombreDirectorio) {
     if(checarExistenciaDirectorio(nombreDirectorio))
     {
         char instruccion[200] = "rm -rf ./";
+        if(nombreDirectorio[strlen(nombreDirectorio) - 1] == '\n') nombreDirectorio[strlen(nombreDirectorio) - 1] = '\0';
         strcat(instruccion, nombreDirectorio);
         strcat(instruccion, "/");
         puts(instruccion);
@@ -43,15 +45,15 @@ int eliminarDirectorio(char* nombreDirectorio) {
  * -1 -> Ocurrió un error al checar existencia de directorio
  * */
 
-int checarExistenciaDirectorio(char* nombreArchivo) {
+int checarExistenciaDirectorio(char* nombreDirectorio) {
     DIR *dir = NULL;
     struct dirent *info;
-
+    if(nombreDirectorio[strlen(nombreDirectorio) - 1] == '\n') nombreDirectorio[strlen(nombreDirectorio) - 1] = '\0';
     /* Comenzamos a leer el directorio actual */
     dir = opendir(".");
     if(!dir) return -1;
     while((info = readdir(dir)) != NULL) {
-        if(!strcmp(info->d_name, nombreArchivo)) {
+        if(!strcmp(info->d_name, nombreDirectorio)) {
            return 1; 
         }
     }

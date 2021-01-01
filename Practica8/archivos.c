@@ -53,6 +53,7 @@ int crearArchivo(char nombreArchivo[], char contenidoArchivo[], int directorio) 
 int checarExistenciaArchivo(char* nombreArchivo) {
     DIR *archivo = NULL;
     struct dirent *info;
+    if(nombreArchivo[strlen(nombreArchivo) - 1] == '\n') nombreArchivo[strlen(nombreArchivo) - 1] = '\0';
     strcat(nombreArchivo, ".txt");
     archivo = opendir(".");
     if(!archivo) return -1;
