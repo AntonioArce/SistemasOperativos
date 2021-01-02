@@ -67,14 +67,23 @@ int checarExistenciaArchivo(char* nombreArchivo) {
 
 /*
  * Status de retorno
- *  0 -> no existe el archivo
- *  1 -> Archivo borrado exitosamente
- * -1 -> Ocurrió un error al borrar archivo
+ *  0 -> archivo eliminado 
+ *  1 -> No se pudo eliminar archivo
  * */
 
 int borrarArchivo(char* nombreArchivo)
 {
-    
+    int status = checarExistenciaArchivo(nombreArchivo);
+
+    if(status == 1)
+    {
+        if(remove(nombreArchivo) == 0)
+            return 0;
+    }
+    else if(status == 0)
+        return 1;
+        
+
 }
 
 void listarContenido()

@@ -79,18 +79,43 @@ void borradoArchivo()
 {
     char nombreArchivo[100];
     int status = 0;
-    int directorio = 0;
+    int opc;
 
-    puts("Ingrese el nombre del directorio a eliminar");
-    __fpurge(stdin);
-    fgets(nombreArchivo, 100, stdin);
+    listarContenido();
 
-    //Aqui solo estoy usando la funcion eliminarDirectorio
+    puts("Desea eliminar un directorio o un archivo");
+    puts("1.- Directorio");
+    puts("2.- Archivo");
+    scanf("%d",&opc);
 
-    status = eliminarDirectorio(nombreArchivo);
+    switch(opc)
+    {
+        case 1:
+            puts("Ingrese el nombre del directorio a eliminar");
+            __fpurge(stdin);
+            fgets(nombreArchivo, 100, stdin);
 
-    if(!status)
-        puts("Directorio eliminado correctamente");
-    else    
-        puts("ocurriio un error al eliminar directorio");
+            status = eliminarDirectorio(nombreArchivo);
+
+            if(status == 0)
+                puts("Directorio eliminado satisfactoriamente");
+            else
+                puts("Hubo un error al eliminar directorio");
+        break;
+        case 2:
+            puts("Ingrese el nombre del archivo a eliminar");
+            __fpurge(stdin);
+            fgets(nombreArchivo, 100, stdin);
+
+            status = borrarArchivo(nombreArchivo);
+
+            if(status == 0)
+                puts("Archivo eliminado satisfactoriamente");
+            else
+                puts("Hubo un error al eliminar archivo");
+        break;
+    }
+
+
+    
 }
