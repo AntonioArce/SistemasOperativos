@@ -92,7 +92,94 @@ int borrarArchivo(char* nombreArchivo)
  * */
 int modificarArchivoDirectorio(char *nombreArchivo, char *buscar, char *reemplazar)
 {
-    
+    char rutaArchivoTemporal[200]="./";
+    char rutaArchivo[200]="./";
+    /////////////////////////////
+    char nombreArchivoLocal[200];
+    char prueba[100];
+    char delimitador[]=" ";
+    char nuevalinea[200];
+    //Variables para usar el directorio
+    DIR *dir = NULL;
+    struct dirent *info;
+
+    int status = checarExistenciaDirectorio(nombreArchivo);
+
+    if(status == 1)
+    {
+        if(nombreArchivo[strlen(nombreArchivo) - 1] == '\n') nombreArchivo[strlen(nombreArchivo) - 1] = '\0';
+        if(buscar[strlen(buscar) - 1] == '\n') buscar[strlen(buscar) - 1] = '\0';
+        if(reemplazar[strlen(reemplazar) - 1] == '\n') reemplazar[strlen(reemplazar) - 1] = '\0';
+        //Ruta para el archivo de texto 
+        strcat(rutaArchivo,nombreArchivo);
+        strcat(rutaArchivo,"/");
+        strcat(rutaArchivo,nombreArchivo);
+        strcat(rutaArchivo,".txt");
+
+        //Ruta para el archivo de texto temporal
+        strcat(rutaArchivoTemporal,nombreArchivo);
+        strcat(rutaArchivoTemporal,"/");
+        strcat(rutaArchivoTemporal,"Temporal.txt");
+
+        strcpy(nombreArchivoLocal,nombreArchivo);
+        strcat(nombreArchivoLocal,".txt");
+
+        printf("%s\n",rutaArchivo);
+        printf("%s\n",rutaArchivoTemporal);
+
+        dir = opendir(nombreArchivo);
+        if(!dir) return -1;
+        while((info = readdir(dir)) != NULL) 
+        {
+            if(!strcmp(info->d_name, nombreArchivoLocal)) 
+            {
+                FILE *archivo = NULL;
+                FILE *archivotemp = NULL;
+
+                archivo = fopen(rutaArchivo,"r+");
+                archivotemp = fopen(rutaArchivoTemporal,"w+");
+
+
+                if(archivo == NULL || archivotemp == NULL) //no se pudo abrir alguno de los 2
+                {
+                    puts("Error al abrir archivo");
+                    return -1; 
+                }
+                fgets(prueba,100,archivo);
+                char *token = strtok(prueba, delimitador);
+                while(token != NULL)
+                {
+                    if(strcmp(token,buscar)==0)
+                    {
+                        strcpy(token,reemplazar);
+                        strcat(nuevalinea,token);
+                    }
+                    else
+                    {
+                        strcat(nuevalinea, " ");
+                        strcat(nuevalinea,token);
+                        strcat(nuevalinea, " ");
+                    }
+                    token = strtok(NULL, delimitador);
+                }
+                __fpurge(stdin);
+                fwrite(nuevalinea,strlen(nuevalinea)*sizeof(char),1,archivotemp);
+                fclose(archivotemp);
+                fclose(archivo);
+
+                remove(rutaArchivo);
+                rename(rutaArchivoTemporal,rutaArchivo);
+                return 1; 
+            }
+        } 
+    }
+    else
+    {
+        return 0;
+    }
+
+
+
 }
 /*
  * Status de retorno
