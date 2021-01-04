@@ -115,7 +115,7 @@ int modificarArchivo(char *nombreArchivo,char *buscar,char *reemplazar)
         FILE *archivotemp = NULL;
 
         archivo = fopen(nombreArchivo,"r+");
-        archivotemp = fopen("temporal.txt","w");
+        archivotemp = fopen("temporal.txt","w+");
 
 
         if(archivo==NULL) //no se pudo abrir alguno de los 2
@@ -145,7 +145,7 @@ int modificarArchivo(char *nombreArchivo,char *buscar,char *reemplazar)
             token = strtok(NULL, delimitador);
         }
         __fpurge(stdin);
-        fwrite(&nuevalinea,1,sizeof(nuevalinea),archivotemp);
+        fwrite(nuevalinea,strlen(nuevalinea)*sizeof(char),1,archivotemp);
         fclose(archivo);
         fclose(archivotemp);
 
