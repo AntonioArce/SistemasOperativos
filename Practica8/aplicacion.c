@@ -31,7 +31,7 @@ void seleccionDeOpcion(char op)
         creacionArchivo();
     break;
     case 2: //Modificar Archivo
-        
+        modificacionArchivo();
     break;
     case 3: //Borrar Archivo
         borradoArchivo();
@@ -115,7 +115,65 @@ void borradoArchivo()
                 puts("Hubo un error al eliminar archivo");
         break;
     }
+}
+void modificacionArchivo()
+{
+    char nombreArchivo[100];
+    char buscar[200];      // texto a buscar
+    char reemplazar[200];  // reemplazar por
 
+    int status = 0;
+    int opc;
 
-    
+    listarContenido();
+
+    puts("Desea modificar un archivo dentro de un directorio o un archivo de la raiz");
+    puts("1.- Directorio");
+    puts("2.- Archivo");
+    scanf("%d",&opc);
+
+    switch(opc)
+    {
+        case 1:
+            puts("Ingrese el nombre del directorio para modificar su archivo");
+            __fpurge(stdin);
+            fgets(nombreArchivo, 100, stdin);
+            
+            puts("Ingresa el texto a buscar: ");
+            __fpurge(stdin);
+            fgets(buscar, 100, stdin);
+
+            puts("Ingresa el texto para reemplazarlo:");
+            __fpurge(stdin);
+            fgets(reemplazar, 100, stdin);
+
+            status = modificarArchivoDirectorio(nombreArchivo,buscar,reemplazar);
+
+            if(status == 1)
+                puts("Archivo en directorio modificado con exito");
+            else
+                puts("Error al modificar archivo");
+
+        break;
+        case 2:
+            puts("Ingrese el nombre del archivo a modificar");
+            __fpurge(stdin);
+            fgets(nombreArchivo, 100, stdin);
+
+            puts("Ingresa el texto a buscar: ");
+            __fpurge(stdin);
+            fgets(buscar, 100, stdin);
+
+            puts("Ingresa el texto para reemplazarlo:");
+            __fpurge(stdin);
+            fgets(reemplazar, 100, stdin);
+
+            status = modificarArchivo(nombreArchivo,buscar,reemplazar);
+
+            if(status == 1)
+                puts("Archivo modificado con exito");
+            else
+                puts("Error al modificar archivo");
+        break;
+    }
 }

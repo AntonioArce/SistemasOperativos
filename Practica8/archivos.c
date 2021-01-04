@@ -85,7 +85,79 @@ int borrarArchivo(char* nombreArchivo)
         
 
 }
+/*
+ * Status de retorno
+ *  1 -> archivo modificado 
+ *  0 -> No se pudo eliminar archivo
+ * */
+int modificarArchivoDirectorio(char *nombreArchivo, char *buscar, char *reemplazar)
+{
+    
+}
+/*
+ * Status de retorno
+ *  1 -> archivo modificado 
+ *  0 -> No se pudo eliminar archivo
+ * */
+int modificarArchivo(char *nombreArchivo,char *buscar,char *reemplazar)
+{
+    int status = checarExistenciaArchivo(nombreArchivo);
+    char prueba[100];
+    char delimitador[]=" ";
+    char nuevalinea[200];
+    int pos, i;
 
+    if(status == 1)
+    {
+        if(buscar[strlen(buscar) - 1] == '\n') buscar[strlen(buscar) - 1] = '\0';
+        if(reemplazar[strlen(reemplazar) - 1] == '\n') reemplazar[strlen(reemplazar) - 1] = '\0';
+        FILE *archivo = NULL;
+        FILE *archivotemp = NULL;
+
+        archivo = fopen(nombreArchivo,"r+");
+        archivotemp = fopen("temporal.txt","w");
+
+
+        if(archivo==NULL) //no se pudo abrir alguno de los 2
+        {
+            puts("Error al abrir archivo");
+            return -1; 
+        }
+
+        //fread(prueba,strlen(prueba),1,archivo);
+
+        //modificar linea a linea
+        fgets(prueba,100,archivo);
+        char *token = strtok(prueba, delimitador);
+        while(token != NULL)
+        {
+            if(strcmp(token,buscar)==0)
+            {
+                strcpy(token,reemplazar);
+                strcat(nuevalinea,token);
+            }
+            else
+            {
+                strcat(nuevalinea, " ");
+                strcat(nuevalinea,token);
+                strcat(nuevalinea, " ");
+            }
+            token = strtok(NULL, delimitador);
+        }
+        __fpurge(stdin);
+        fwrite(&nuevalinea,1,sizeof(nuevalinea),archivotemp);
+        fclose(archivo);
+        fclose(archivotemp);
+
+        remove(nombreArchivo);
+        rename("temporal.txt",nombreArchivo);
+
+        return 1;
+        
+    }
+    else if(status == 0)
+        return 0;
+}
 void listarContenido()
 {
     system("tree");   

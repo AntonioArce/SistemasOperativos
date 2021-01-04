@@ -10,7 +10,8 @@
 #include <stdlib.h>
 
 int crearArchivo(char[], char[], int);
-int modificarArchivo(char*);
+int modificarArchivo(char*,char*,char*);
+int modificarArchivoDirectorio(char*,char*,char*);
 int eliminarArchivo(char*);
 int checarExistenciaArchivo(char*);
 int borrarArchivo(char*);
