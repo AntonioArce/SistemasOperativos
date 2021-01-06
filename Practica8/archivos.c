@@ -35,7 +35,7 @@ int crearArchivo(char nombreArchivo[], char contenidoArchivo[], int directorio) 
         puts(instruccion);
         system(instruccion);
     }else if(directorio && checarExistenciaDirectorio(nombreArchivo)) {
-        // Agregas la función de eliminar archivo cuando la implementes 
+        borrarArchivo(nombreArchivo);
         fclose(archivo);
         return 1;
     }
